@@ -58,25 +58,43 @@ def handler(event):
     This is the handler function that will be called by the serverless.
     '''
 
-    json_response = run_inference({"input": event["input"]})
+    # json_response = run_inference({"input": event["input"]})
 
-    # Check if json_response is a list or dictionary and handle accordingly
-    if isinstance(json_response, list):
-        # Handle the case where json_response is a list
-        # Assuming the output we need is in the first element
-        if json_response and "output" in json_response[0]:
+    # # Check if json_response is a list or dictionary and handle accordingly
+    # if isinstance(json_response, list):
+    #     # Handle the case where json_response is a list
+    #     # Assuming the output we need is in the first element
+    #     if json_response and "output" in json_response[0]:
+    #         return json_response[0]["output"]
+    #     else:
+    #         raise ValueError("Invalid response format: 'output' key not found in list element")
+    # elif isinstance(json_response, dict):
+    #     # Handle the case where json_response is a dictionary
+    #     if "output" in json_response:
+    #         return json_response["output"]
+    #     else:
+    #         raise ValueError("Invalid response format: 'output' key not found in dictionary")
+    # else:
+    #     # Handle unexpected cases
+    #     raise TypeError("Unexpected type for json_response variable")
+
+    try:
+        json_response = run_inference({"input": event["input"]})
+    
+        # Check if json_response is a list or dictionary and handle accordingly
+        if isinstance(json_response, list):
+            # Handle the case where json_response is a list
+            # Assuming the output we need is in the first element
             return json_response[0]["output"]
-        else:
-            raise ValueError("Invalid response format: 'output' key not found in list element")
-    elif isinstance(json_response, dict):
-        # Handle the case where json_response is a dictionary
-        if "output" in json_response:
+        elif isinstance(json_response, dict):
+            # Handle the case where json_response is a dictionary
             return json_response["output"]
         else:
-            raise ValueError("Invalid response format: 'output' key not found in dictionary")
-    else:
-        # Handle unexpected cases
-        raise TypeError("Unexpected type for json_response variable")
+            # Handle unexpected cases
+            raise TypeError("Unexpected type for json_response variable")
+    
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
 
