@@ -91,6 +91,7 @@ def handler(event):
             return json_response["output"]
         else:
             # Handle unexpected cases
+            print(' *** Type json_response is:',type(json_response))
             raise TypeError("Unexpected type for json_response variable")
     
     except Exception as e:
