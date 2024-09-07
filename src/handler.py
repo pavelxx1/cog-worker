@@ -1,6 +1,6 @@
 import time
 import subprocess
-
+import traceback
 import runpod
 import requests
 from requests.adapters import HTTPAdapter, Retry
@@ -96,7 +96,8 @@ def handler(event):
     
     except Exception as e:
         print(f"An error occurred: {e}")
-
+        tb_err = ''.join(traceback.format_exception(type(e), e, e.__traceback__)) #''.join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))          
+        print('*****ERROR*****',str(tb_err))   
 
 
 if __name__ == "__main__":
